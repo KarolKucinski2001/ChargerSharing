@@ -45,7 +45,7 @@ namespace Sharing.ViewModels
             }
             else
             {
-                LoginMessage = "Please enter proper user name and password";
+                LoginMessage = "Please enter valid user name and password";
                 TurnLoginMessage = true;
             }
         }

@@ -1,31 +1,67 @@
-﻿using Sharing.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
+using Sharing.Models;
+using Xamarin.Essentials;
 
 namespace Sharing.Services
 {
-    public class loginService : ILoginService
+    public class LoginService : ILoginService
     {
-        List<UserModel> userList = new List<UserModel>();
+        private readonly DatabaseHelper databaseHelper;
 
 
-        public loginService()
+
+        public LoginService()
         {
-            userList.Add(new UserModel { userName = "user1", password = "123456" }) ;  
-            userList.Add(new UserModel { userName = "user2", password = "1234567" }) ;  
-        
+            databaseHelper = new DatabaseHelper("/data/user/0/com.companyname.sharing/files/.local/share/mydatabase.db");
         }
+
         public bool login(string username, string password)
         {
-            foreach(var user in userList) 
+            UserModel user = databaseHelper.GetUserByUsername(username);
+            if (user != null && user.Password == password)
             {
-                if(username==user.userName & password==user.password)
-                {
-                    return true;    
-                }
+                return true;
             }
             return false;
         }
+
+       
     }
 }
+
+
+
+
+//using Sharing.Models;
+//using System;
+//using System.Collections.Generic;
+//using System.Text;
+
+//namespace Sharing.Services
+//{
+//    public class loginService : ILoginService
+//    {
+//        List<UserModel> userList = new List<UserModel>();
+
+
+//        public loginService()
+//        {
+//            userList.Add(new UserModel { UserName = "user1", Password = "123456" }) ;  
+//            userList.Add(new UserModel { UserName = "user2", Password = "1234567" }) ;  
+
+//        }
+//        public bool login(string username, string password)
+//        {
+//            foreach(var user in userList) 
+//            {
+//                if(username==user.UserName & password==user.Password)
+//                {
+//                    return true;    
+//                }
+//            }
+//            return false;
+//        }
+//    }
+//}
